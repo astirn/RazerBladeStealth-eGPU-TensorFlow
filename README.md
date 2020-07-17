@@ -9,8 +9,8 @@
     * `sudo bash -c "echo options nouveau modeset=0 >> /etc/modprobe.d/blacklist-nvidia-nouveau.conf"`
     
   4. Reboot and test via terminal with `nvidia-smi`.
-
-
- cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf
-blacklist nouveau
-options nouveau modeset=0
+  5. Confirm nouveau disable:
+    'cat /etc/modprobe.d/blacklist-nvidia-nouveau.conf' should print
+    'blacklist nouveau'
+    'options nouveau modeset=0'
+  
