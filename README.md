@@ -19,9 +19,12 @@
     2. Find line with `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash`
     3. Modify to `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash button.lid_init_state=open`
     4. Save and close.
-    5. `sudo update grub`
+    5. `sudo update-grub`
     6. `sudo reboot`
     7. Test if it worked.
+
+## Install CUDA
+1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work. 
 
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
