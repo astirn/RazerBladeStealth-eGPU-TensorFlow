@@ -40,7 +40,9 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 5. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
 ## Configure eGPU
-1. Install and follow instructions from [egpu-switcher] (https://github.com/hertg/egpu-switcher)
+1. Boot laptop unplugged from Razer Core.
+2. Power on Razer Core and connect to Thunderbolt 3 port.
+3. Install and follow instructions from [egpu-switcher] (https://github.com/hertg/egpu-switcher)
 
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
