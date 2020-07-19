@@ -35,8 +35,9 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 ## Install Development Environment
 1. `sudo apt install git`
 2. `sudo apt install python3-distutils`
-3. Use software store to get appropriate version of PyCharm.
-4. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
+3. `sudo apt install python3-tk`
+4. Use software store to get appropriate version of PyCharm.
+5. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
