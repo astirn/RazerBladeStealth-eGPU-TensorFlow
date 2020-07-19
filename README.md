@@ -39,6 +39,9 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 4. Use software store to get appropriate version of PyCharm.
 5. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
+## Configure eGPU
+1. Install and follow instructions from [egpu-switcher] (https://github.com/hertg/egpu-switcher)
+
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
 2. Complete linux post-implementation [steps](https://docs.docker.com/engine/install/linux-postinstall/)
