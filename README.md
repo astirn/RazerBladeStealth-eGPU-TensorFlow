@@ -32,6 +32,12 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 ## Install CUDA
 1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work. 
 
+## Install Development Environment
+1. `sudo apt install git`
+2. `sudo apt install python3-distutils`
+3. Use software store to get appropriate version of PyCharm.
+4. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
+
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
 2. Complete linux post-implementation [steps](https://docs.docker.com/engine/install/linux-postinstall/)
