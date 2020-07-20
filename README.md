@@ -39,7 +39,7 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 4. Give permission for profiling: open/create `/etc/modprobe.d/nvidia-kernel-common.conf` and add `options nvidia "NVreg_RestrictProfilingToAdminUsers=0"`.
 5. Use software store to get appropriate version of PyCharm.
 6. Add lipcupti to LD_LIBRARY_PATH to environment variables within PyCharm's Python run configuration.
-[!image]()
+![Screenshot](LD_LIBRARY_PATH.png)
 7. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
 ## Configure eGPU
