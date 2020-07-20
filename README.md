@@ -32,17 +32,20 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 ## Install CUDA
 1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work. 
 
-## Install Development Environment
+## Install Development Environment with CUDA Profiling Capabilities
 1. `sudo apt install git`
 2. `sudo apt install python3-distutils`
 3. `sudo apt install python3-tk`
-4. Use software store to get appropriate version of PyCharm.
-5. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
+4. Give permission for profiling: open/create `/etc/modprobe.d/nvidia-kernel-common.conf` and add `options nvidia "NVreg_RestrictProfilingToAdminUsers=0"`.
+5. Use software store to get appropriate version of PyCharm.
+6. Add lipcupti to LD_LIBRARY_PATH to environment variables within PyCharm's Python run configuration.
+[!image]()
+7. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
 ## Configure eGPU
 1. Boot laptop unplugged from Razer Core.
 2. Power on Razer Core and connect to Thunderbolt 3 port.
-3. Install and follow instructions from [egpu-switcher] (https://github.com/hertg/egpu-switcher)
+3. Install and follow instructions from [egpu-switcher](https://github.com/hertg/egpu-switcher)
 
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
