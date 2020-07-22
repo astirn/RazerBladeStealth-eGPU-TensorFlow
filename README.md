@@ -28,6 +28,7 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 1. `sudo apt install lm-sensors`
 2. `sudo apt install psensor`
 3. Launch `psensor`, set to run on start-up, configure which temp(s) to display on top-panel GUI.
+4. Also use https://amanusk.github.io/s-tui/.
 
 ## Install CUDA
 1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work. 
