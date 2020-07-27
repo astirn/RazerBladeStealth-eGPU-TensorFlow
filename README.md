@@ -52,6 +52,8 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         sudo apt install cargo
         cd ~/razer-laptop-control/razer_control_gui
         ./install.sh
+        
+3. For 15W limit: `razer-cli write power 0`. For 25W limit `razer-cli write power 1`
 
 ## Install CUDA + cudnn and verify both
 1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work.
