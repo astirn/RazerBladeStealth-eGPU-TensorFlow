@@ -40,7 +40,7 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         cd ~/razer-laptop-control/driver
         cd driver
         sudo make driver_dkms
-        Observe version number a.b.c (tested with 1.2.1)
+        Observe version number a.b.c (tested with 1.2.2)
         sudo dkms add -m razercontrol -v a.b.c
         sudo dkms build -m razercontrol -v a.b.c
         sudo dkms install -m razercontrol -v a.b.c
