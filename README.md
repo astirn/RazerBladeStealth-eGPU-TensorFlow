@@ -30,8 +30,49 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 3. Launch `psensor`, set to run on start-up, configure which temp(s) to display on top-panel GUI.
 4. Also use https://amanusk.github.io/s-tui/.
 
-## Install CUDA
-1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work. 
+## Install Razer-Drivers and CLI
+Install this if want you access to gaming mode that can deliver a max of 25W to CPU instead of 15W. This linux tool provides a CLI that mimics Razer Synapse for Windows. Big props to @rnd-ash for adding my 2020 RBS variant to the supported laptops!
+
+1. Install driver:
+
+        cd ~
+        git clone https://github.com/rnd-ash/razer-laptop-control/
+        cd ~/razer-laptop-control/driver
+        cd driver
+        sudo make driver_dkms
+        Observe version number a.b.c (tested with 1.2.1)
+        sudo dkms add -m razercontrol -v a.b.c
+        sudo dkms build -m razercontrol -v a.b.c
+        sudo dkms install -m razercontrol -v a.b.c
+        sudo update-initramfs -u
+        sudo reboot
+        
+2. Install CLI:
+
+        sudo apt install cargo
+        cd ~/razer-laptop-control/razer_control_gui
+        ./install.sh
+
+## Install CUDA + cudnn and verify both
+1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work.
+2. To compile and run samples, one needs gcc-8 and g++-8 (Ubuntu 20.04 ships with version 9):
+
+        sudo apt install gcc-8 g++-8
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 8
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-8 8
+        sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 9
+        sudo update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 9
+        sudo update-alternatives --config gcc (set to 8)
+        sudo update-alternatives --config g++ (set to 8)
+        
+3. Update environment variables, by adding the following to `~/.bashrc`:
+
+        # export CUDA related paths
+        export PATH=/usr/local/cuda-10.1/bin:/usr/local/cuda-10.1/NsightCompute-2019.1${PATH:+:${PATH}}
+        export LD_LIBRARY_PATH=/usr/local/cuda-10.1/lib64${LD_LIBRARY_PATH:+:${LD_LIBRARY_PATH}}
+        export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/extras/CUPTI/lib64
+        
+4. Run `source ~/.bashrc` to take effect (might need to log in and out).
 
 ## Install Development Environment with CUDA Profiling Capabilities
 1. `sudo apt install git`
