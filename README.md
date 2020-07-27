@@ -84,8 +84,6 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
 
 6. Verify cuDNN by [compiling and running samples](https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installlinux-rpm):
 
-
-
 ## Install Development Environment with CUDA Profiling Capabilities
 1. `sudo apt install git`
 2. `sudo apt install python3-distutils`
@@ -95,6 +93,92 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
 6. Add lipcupti to LD_LIBRARY_PATH to environment variables within PyCharm's Python run configuration.
 ![Screenshot](LD_LIBRARY_PATH.png)
 7. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
+
+## Build TensorFlow from Source
+1. Install [appropriate Bazel version](https://www.tensorflow.org/install/source#tested_build_configurations). For TF2.2, do:
+
+        sudo apt install curl gnupg
+        curl -f https://bazel.build/bazel-release.pub.gpg | sudo apt-key add -
+        echo "deb [arch=amd64] https://storage.googleapis.com/bazel-apt stable jdk1.8" | sudo tee /etc/apt/sources.list.d/bazel.list
+        sudo apt update
+        sudo apt install bazel-2.0.0
+        sudo update-alternatives --install /usr/bin/bazel bazel /usr/bin/bazel-2.0.0 0
+        
+2. Use PyCharm to checkout `https://github.com/tensorflow/tensorflow.git`
+3. Make virtual environment and install:
+
+        pip install -U  pip six 'numpy<1.19.0' wheel setuptools mock 'future>=0.17.1'
+        pip install -U  keras_applications --no-deps
+        pip install -U  keras_preprocessing --no-deps
+
+4. Checkout release branch: `git checkout r.2.2` for example.
+5. `./configure`
+
+Extracting Bazel installation...
+You have bazel 2.0.0 installed.
+Please specify the location of python. [Default is /home/andrew/PycharmProjects/tensorflow/venv/bin/python]: 
+
+
+Found possible Python library paths:
+  /home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages
+Please input the desired Python library path to use.  Default is [/home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages]
+
+Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: N
+No OpenCL SYCL support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with ROCm support? [y/N]: N
+No ROCm support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with CUDA support? [y/N]: y
+CUDA support will be enabled for TensorFlow.
+
+Do you wish to build TensorFlow with TensorRT support? [y/N]: y
+TensorRT support will be enabled for TensorFlow.
+
+Found CUDA 10.1 in:
+    /usr/local/cuda/lib64
+    /usr/local/cuda/include
+Found cuDNN 7 in:
+    /usr/lib/x86_64-linux-gnu
+    /usr/include
+Found TensorRT 7 in:
+    /usr/lib/x86_64-linux-gnu
+    /usr/include/x86_64-linux-gnu
+
+
+Please specify a list of comma-separated CUDA compute capabilities you want to build with.
+You can find the compute capability of your device at: https://developer.nvidia.com/cuda-gpus.
+Please note that each additional compute capability significantly increases your build time and binary size, and that TensorFlow only supports compute capabilities >= 3.5 [Default is: 7.5,7.5]: 
+
+
+Do you want to use clang as CUDA compiler? [y/N]: N
+nvcc will be used as CUDA compiler.
+
+Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: 
+
+
+Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native -Wno-sign-compare]: 
+
+
+Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]: N
+Not configuring the WORKSPACE for Android builds.
+
+Preconfigured Bazel build configs. You can use any of the below by adding "--config=<>" to your build command. See .bazelrc for more details.
+        --config=mkl            # Build with MKL support.
+        --config=monolithic     # Config for mostly static monolithic build.
+        --config=ngraph         # Build with Intel nGraph support.
+        --config=numa           # Build with NUMA support.
+        --config=dynamic_kernels        # (Experimental) Build kernels into separate shared objects.
+        --config=v2             # Build TensorFlow 2.x instead of 1.x.
+Preconfigured Bazel build configs to DISABLE default on features:
+        --config=noaws          # Disable AWS S3 filesystem support.
+        --config=nogcp          # Disable GCP support.
+        --config=nohdfs         # Disable HDFS support.
+        --config=nonccl         # Disable NVIDIA NCCL support.
+Configuration finished
+
+6. `bazel build --config=opt --config=cuda --config=mkl //tensorflow/tools/pip_package:build_pip_package`
+
 
 ## Configure eGPU
 Only use use eGPU if the eGPU has a monitor attached. Otherwise, the eGPU will be disabled on boot. 
