@@ -55,7 +55,7 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         
 3. For 15W limit: `razer-cli write power 0`. For 25W limit `razer-cli write power 1`
 
-## Install CUDA + cudnn and verify both
+## Install CUDA + cuDNN and verify both
 1. Despite having installed 20.04, TensorFlow's 18.04 [instructions](https://www.tensorflow.org/install/gpu) work.
 2. To compile and run samples, one needs gcc-8 and g++-8 (Ubuntu 20.04 ships with version 9):
 
@@ -76,6 +76,16 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         
 4. Run `source ~/.bashrc` to take effect (might need to log in and out).
 
+5. Verify CUDA by compiling and running samples:
+
+        cuda-install-samples-10.1.sh ~
+        cd ~/NVIDIA_CUDA-10.1_Samples/
+        make
+
+6. Verify cuDNN by [compiling and running samples](https://docs.nvidia.com/deeplearning/sdk/cudnn-install/index.html#installlinux-rpm):
+
+
+
 ## Install Development Environment with CUDA Profiling Capabilities
 1. `sudo apt install git`
 2. `sudo apt install python3-distutils`
@@ -87,6 +97,8 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
 7. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
 ## Configure eGPU
+Only use use eGPU if the eGPU has a monitor attached. Otherwise, the eGPU will be disabled on boot. 
+
 1. Boot laptop unplugged from Razer Core.
 2. Power on Razer Core and connect to Thunderbolt 3 port.
 3. Install and follow instructions from [egpu-switcher](https://github.com/hertg/egpu-switcher)
