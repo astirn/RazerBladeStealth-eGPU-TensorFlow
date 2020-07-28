@@ -112,72 +112,77 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         pip install -U  keras_preprocessing --no-deps
 
 4. Checkout release branch: `git checkout r.2.2` for example.
-5. `./configure`
+5. Run `./configure`. My settings and configuration options are  below:
 
-Extracting Bazel installation...
-You have bazel 2.0.0 installed.
-Please specify the location of python. [Default is /home/andrew/PycharmProjects/tensorflow/venv/bin/python]: 
+        Extracting Bazel installation...
+        You have bazel 2.0.0 installed.
+        Please specify the location of python. [Default is /home/andrew/PycharmProjects/tensorflow/venv/bin/python]: 
+        
+        
+        Found possible Python library paths:
+          /home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages
+        Please input the desired Python library path to use.  Default is [/home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages]
+        
+        Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: N
+        No OpenCL SYCL support will be enabled for TensorFlow.
+        
+        Do you wish to build TensorFlow with ROCm support? [y/N]: N
+        No ROCm support will be enabled for TensorFlow.
+        
+        Do you wish to build TensorFlow with CUDA support? [y/N]: y
+        CUDA support will be enabled for TensorFlow.
+        
+        Do you wish to build TensorFlow with TensorRT support? [y/N]: y
+        TensorRT support will be enabled for TensorFlow.
+        
+        Found CUDA 10.1 in:
+            /usr/local/cuda/lib64
+            /usr/local/cuda/include
+        Found cuDNN 7 in:
+            /usr/lib/x86_64-linux-gnu
+            /usr/include
+        Found TensorRT 7 in:
+            /usr/lib/x86_64-linux-gnu
+            /usr/include/x86_64-linux-gnu
+        
+        
+        Please specify a list of comma-separated CUDA compute capabilities you want to build with.
+        You can find the compute capability of your device at: https://developer.nvidia.com/cuda-gpus.
+        Please note that each additional compute capability significantly increases your build time and binary size, and that TensorFlow only supports compute capabilities >= 3.5 [Default is: 7.5,7.5]: 
+        
+        
+        Do you want to use clang as CUDA compiler? [y/N]: N
+        nvcc will be used as CUDA compiler.
+        
+        Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: 
+        
+        
+        Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native -Wno-sign-compare]: 
+        
+        
+        Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]: N
+        Not configuring the WORKSPACE for Android builds.
+        
+        Preconfigured Bazel build configs. You can use any of the below by adding "--config=<>" to your build command. See .bazelrc for more details.
+                --config=mkl            # Build with MKL support.
+                --config=monolithic     # Config for mostly static monolithic build.
+                --config=ngraph         # Build with Intel nGraph support.
+                --config=numa           # Build with NUMA support.
+                --config=dynamic_kernels        # (Experimental) Build kernels into separate shared objects.
+                --config=v2             # Build TensorFlow 2.x instead of 1.x.
+        Preconfigured Bazel build configs to DISABLE default on features:
+                --config=noaws          # Disable AWS S3 filesystem support.
+                --config=nogcp          # Disable GCP support.
+                --config=nohdfs         # Disable HDFS support.
+                --config=nonccl         # Disable NVIDIA NCCL support.
+        Configuration finished
 
-
-Found possible Python library paths:
-  /home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages
-Please input the desired Python library path to use.  Default is [/home/andrew/PycharmProjects/tensorflow/venv/lib/python3.8/site-packages]
-
-Do you wish to build TensorFlow with OpenCL SYCL support? [y/N]: N
-No OpenCL SYCL support will be enabled for TensorFlow.
-
-Do you wish to build TensorFlow with ROCm support? [y/N]: N
-No ROCm support will be enabled for TensorFlow.
-
-Do you wish to build TensorFlow with CUDA support? [y/N]: y
-CUDA support will be enabled for TensorFlow.
-
-Do you wish to build TensorFlow with TensorRT support? [y/N]: y
-TensorRT support will be enabled for TensorFlow.
-
-Found CUDA 10.1 in:
-    /usr/local/cuda/lib64
-    /usr/local/cuda/include
-Found cuDNN 7 in:
-    /usr/lib/x86_64-linux-gnu
-    /usr/include
-Found TensorRT 7 in:
-    /usr/lib/x86_64-linux-gnu
-    /usr/include/x86_64-linux-gnu
-
-
-Please specify a list of comma-separated CUDA compute capabilities you want to build with.
-You can find the compute capability of your device at: https://developer.nvidia.com/cuda-gpus.
-Please note that each additional compute capability significantly increases your build time and binary size, and that TensorFlow only supports compute capabilities >= 3.5 [Default is: 7.5,7.5]: 
-
-
-Do you want to use clang as CUDA compiler? [y/N]: N
-nvcc will be used as CUDA compiler.
-
-Please specify which gcc should be used by nvcc as the host compiler. [Default is /usr/bin/gcc]: 
-
-
-Please specify optimization flags to use during compilation when bazel option "--config=opt" is specified [Default is -march=native -Wno-sign-compare]: 
-
-
-Would you like to interactively configure ./WORKSPACE for Android builds? [y/N]: N
-Not configuring the WORKSPACE for Android builds.
-
-Preconfigured Bazel build configs. You can use any of the below by adding "--config=<>" to your build command. See .bazelrc for more details.
-        --config=mkl            # Build with MKL support.
-        --config=monolithic     # Config for mostly static monolithic build.
-        --config=ngraph         # Build with Intel nGraph support.
-        --config=numa           # Build with NUMA support.
-        --config=dynamic_kernels        # (Experimental) Build kernels into separate shared objects.
-        --config=v2             # Build TensorFlow 2.x instead of 1.x.
-Preconfigured Bazel build configs to DISABLE default on features:
-        --config=noaws          # Disable AWS S3 filesystem support.
-        --config=nogcp          # Disable GCP support.
-        --config=nohdfs         # Disable HDFS support.
-        --config=nonccl         # Disable NVIDIA NCCL support.
-Configuration finished
-
-6. `bazel build --config=opt --config=cuda --config=mkl //tensorflow/tools/pip_package:build_pip_package`
+6. Some things that I ended up needed to get the build to work
+    1. `sudo apt install libnvinfer-plugin-dev`
+    2. Download and install Intel [MKL Libraries](https://software.intel.com/content/www/us/en/develop/tools/math-kernel-library/choose-download/linux.html).
+        1. `tar -xvf l_mkl_XXXX.Y.ZZZ.tgz`
+        2. `sudo ./install_GUI.sh` (exclude ia32 architecture and Fortran support)
+6. `bazel build --config=opt --config=cuda --config=mkl --local_ram_resources=9216 //tensorflow/tools/pip_package:build_pip_package`
 
 
 ## Configure eGPU
