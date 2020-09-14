@@ -17,7 +17,7 @@
 6. Fix suspend loop (i.e. resuming after a lid-closing-induced suspend, will continually suspend 30 seconds after login)
     1. `sudo nano /etc/default/grub`
     2. Find line with `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash`
-    3. Modify to `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash button.lid_init_state=open`
+    3. Modify to `GRUB_CMDLINE_LINUX_DEFAULT="quiet splash button.lid_init_state=open"`
     4. Save and close.
     5. `sudo update-grub`
     6. `sudo reboot`
@@ -31,7 +31,10 @@ I have blown up two Razer Blades training models on the dGPU. Let's try to avoid
 4. Also use https://amanusk.github.io/s-tui/.
 
 ## Install Razer-Drivers and CLI
-Install this if want you access to gaming mode that can deliver a max of 25W to CPU instead of 15W. This linux tool provides a CLI that mimics Razer Synapse for Windows. Big props to @rnd-ash for adding my 2020 RBS variant to the supported laptops!
+Install this if want you access to gaming mode that can deliver a max of 25W to CPU instead of 15W.
+This linux tool provides a CLI that mimics Razer Synapse for Windows.
+Big props to @rnd-ash for adding my 2020 RBS variant to the supported laptops!
+That said, I did not notice a performance boost when using TensorFlow.
 
 1. Install driver:
 
@@ -94,6 +97,18 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
 ![Screenshot](LD_LIBRARY_PATH.png)
 7. Clone a TensorFlow project, make a virtual environment with PyCharm, test it out!
 
+## Configure eGPU
+Only use use eGPU if the eGPU has a monitor attached. Otherwise, the eGPU will be disabled on boot. 
+
+1. Boot laptop unplugged from Razer Core.
+2. Power on Razer Core and connect to Thunderbolt 3 port.
+3. Install and follow instructions from [egpu-switcher](https://github.com/hertg/egpu-switcher)
+
+## Usability Improvements
+
+1. Install flash for firefox: `sudo apt install flashplugin-installer`
+
+
 ## Build TensorFlow from Source
 1. Install [appropriate Bazel version](https://www.tensorflow.org/install/source#tested_build_configurations). For TF2.2, do:
 
@@ -105,7 +120,7 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
         sudo update-alternatives --install /usr/bin/bazel bazel /usr/bin/bazel-2.0.0 0
         
 2. Use PyCharm to checkout `https://github.com/tensorflow/tensorflow.git`
-3. Make virtual environment and install:
+3. Make virtual environment, start it, and install:
 
         pip install -U  pip six 'numpy<1.19.0' wheel setuptools mock 'future>=0.17.1'
         pip install -U  keras_applications --no-deps
@@ -179,18 +194,16 @@ Install this if want you access to gaming mode that can deliver a max of 25W to 
 
 6. Some things that I ended up needed to get the build to work
     1. `sudo apt install libnvinfer-plugin-dev`
-    2. Download and install Intel [MKL Libraries](https://software.intel.com/content/www/us/en/develop/tools/math-kernel-library/choose-download/linux.html).
-        1. `tar -xvf l_mkl_XXXX.Y.ZZZ.tgz`
-        2. `sudo ./install_GUI.sh` (exclude ia32 architecture and Fortran support)
-6. `bazel build --config=opt --config=cuda --config=mkl --local_ram_resources=9216 //tensorflow/tools/pip_package:build_pip_package`
-
-
-## Configure eGPU
-Only use use eGPU if the eGPU has a monitor attached. Otherwise, the eGPU will be disabled on boot. 
-
-1. Boot laptop unplugged from Razer Core.
-2. Power on Razer Core and connect to Thunderbolt 3 port.
-3. Install and follow instructions from [egpu-switcher](https://github.com/hertg/egpu-switcher)
+    2.  Download https://github.com/01org/mkl-dnn/releases/download/v0.9/mklml_lnx_2018.0.20170425.tgz
+            
+            cd ~/Downloads/mklml_lnx_2018.0.20170425/lib
+            tar -xzf mklml_lnx*.tgz 
+            sudo cp libiomp5.so /usr/local/lib/
+            sudo cp libmklml_intel.so /usr/local/lib/
+            export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/lib
+           
+7. `bazel build --config=opt --config=cuda --config=mkl --local_ram_resources=4096 --local_cpu_resources=4 //tensorflow/tools/pip_package:build_pip_package`
+8. `./bazel-bin/tensorflow/tools/pip_package/build_pip_package /tmp/tensorflow_pkg`
 
 ## Install Docker with NVIDIA Support
 1. Install Docker per [Ubuntu Instructions](https://docs.docker.com/engine/install/ubuntu/)
